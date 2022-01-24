@@ -40,3 +40,6 @@ jobs:
 
             - name: Run tests 🧪
               run: npm run test
+            
+            - name: Run Server
+              run: npm run dev
