@@ -1,42 +1,48 @@
-name: deploy server on cloud
+name: ci
+
 on:
     push:
         branches:
             - dev
 jobs:
-    build:
-            runs-on: ${{ matrix.os }}
+    ci:
+        runs-on: ${{ matrix.os }}
 
-            steps:
-                -name: Checkout 🛎
-                -uses: actions/checkout@dev
+        strategy:
+            matrix:
+                os: [ubuntu-latest]
+                node: [14]
 
-                - name: Setup node env 🏗
-                  uses: actions/setup-node@v2.1.5
-                  with:
-                      node-version: ${{ matrix.node }}
-                      check-latest: true
+        steps:
+            - name: Checkout 🛎
+              uses: actions/checkout@master
 
-                - name: Cache node_modules 📦
-                  uses: actions/cache@v2.1.4
-                  with:
-                      path: ~/.npm
-                      key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-                      restore-keys: |
-                          ${{ runner.os }}-node-
+            - name: Setup node env 🏗
+              uses: actions/setup-node@v2.1.5
+              with:
+                  node-version: ${{ matrix.node }}
+                  check-latest: true
 
-                - name: Install dependencies 👨🏻‍💻
-                  run: npm ci --prefer-offline --no-audit
+            - name: Cache node_modules 📦
+              uses: actions/cache@v2.1.4
+              with:
+                  path: ~/.npm
+                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-node-
 
-                - name: Run linter 👀
-                  run: npm run lint
+            - name: Install dependencies 👨🏻‍💻
+              run: npm ci --prefer-offline --no-audit
 
-                - name: Run tests 🧪
-                  run: npm run test
-                
-                - name: Deploy to Server  # 第四步，rsync推送文件
-                  uses: AEnterprise/rsync-deploy@v1.0  # 使用别人包装好的步骤镜像
-                  env:
+            - name: Run linter 👀
+              run: npm run lint
+
+            - name: Run tests 🧪
+              run: npm run test
+            
+            - name: Deploy to Server  # 第四步，rsync推送文件
+              uses: AEnterprise/rsync-deploy@v1.0  # 使用别人包装好的步骤镜像
+              env:
                     DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}   # 引用配置，SSH私钥
                     ARGS: -avz --delete --exclude='*.pyc'   # rsync参数，排除.pyc文件
                     SERVER_PORT: '22'  # SSH端口
@@ -44,5 +50,3 @@ jobs:
                     SERVER_IP: ${{ secrets.SSH_HOST }}  # 引用配置，服务器的host名（IP或者域名domain.com）
                     USERNAME: ${{ secrets.SSH_USERNAME }}  # 引用配置，服务器登录名
                     SERVER_DESTINATION: /www/wwwroot/nuxt/   # 部署到目标文件夹
-
-            
