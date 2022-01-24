@@ -1,3 +1,3 @@
-(() => {
-  window.document.documentElement.setAttribute( "data-theme", 'light' );
+;(() => {
+	window.document.documentElement.setAttribute('data-theme', 'light')
 })()

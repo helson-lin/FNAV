@@ -1,9 +1,0 @@
-$theme-blue {
-  --text-color: red;
-}
-$theme-light {
-  --text-color: aqua;
-}
-@mixin theme($theme) {
-  $theme-blue;
-}
