@@ -4,7 +4,6 @@ on:
     push:
         branches:
             - master
-            - dev
 jobs:
     ci:
         runs-on: ${{ matrix.os }}
@@ -40,6 +39,6 @@ jobs:
 
             - name: Run tests 🧪
               run: npm run test
-            
+
             - name: Run Server
               run: npm run dev
