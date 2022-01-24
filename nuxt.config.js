@@ -12,13 +12,16 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' },
+      { rel: 'stylesheet', type: '', href: 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'}
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['ant-design-vue/dist/antd.css', 'assets/css/reset.css', 'assets/css/main.css'],
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/antd-ui', {src: '~plugins/rem.js', mode: 'client' }],
+  plugins: ['@/plugins/antd-ui', {src: '~plugins/rem.js', mode: 'client' },  {src: '~plugins/lazy-load.js', mode: 'client' }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

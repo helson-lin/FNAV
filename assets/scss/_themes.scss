@@ -5,10 +5,12 @@
 $themes: (
 
   light: (
+    // theme
+    theme-color: #fcd133,
     //字体
     f_color: #000000, // 主要字体颜色
     fc_color: #ffffff,
-    fg-color: #666666, // 次要字体颜色
+    fg-color: #e4e4e4, // 次要字体颜色
 
     //背景
     bh_color: #ffffff, // 头部背景色
@@ -23,6 +25,8 @@ $themes: (
   ),
 
   dark: (
+    // theme
+    theme-color: #fcd133,
     //字体
     f_color: #000000, // 主要字体颜色
     fc_color: #ffffff,
